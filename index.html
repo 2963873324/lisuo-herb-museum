@@ -1,0 +1,1714 @@
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>云南傈僳族草医草药文化数字馆</title>
+
+    <style>
+        :root {
+            --primary-green: #1b4332;
+            --mid-green: #2d6a4f;
+            --light-green: #40916c;
+            --mint-green: #52b788;
+            --accent-green: #d8f3dc;
+            --text-dark: #2d3436;
+            --text-gray: #636e72;
+            --bg-white: #ffffff;
+            --bg-light: #f8f9fa;
+            --warning-bg: #fff8e1;
+            --transition: all 0.3s ease;
+            --shadow-sm: 0 2px 8px rgba(0,0,0,0.06);
+            --shadow-md: 0 8px 24px rgba(0,0,0,0.08);
+            --shadow-lg: 0 16px 40px rgba(0,0,0,0.12);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'PingFang SC', 'Microsoft YaHei', sans-serif;
+            line-height: 1.8;
+            color: var(--text-dark);
+            background: var(--bg-white);
+            overflow-x: hidden;
+        }
+
+        img {
+            width: 100%;
+            display: block;
+        }
+
+        .navbar {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            min-height: 75px;
+            background: rgba(255,255,255,0.98);
+            backdrop-filter: blur(10px);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 4%;
+            box-shadow: 0 2px 15px rgba(0,0,0,0.05);
+            z-index: 1000;
+            gap: 20px;
+        }
+
+        .logo {
+            font-size: 1.3rem;
+            font-weight: 800;
+            color: var(--primary-green);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            white-space: nowrap;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 18px;
+            align-items: center;
+            flex-wrap: wrap;
+            justify-content: flex-end;
+        }
+
+        .nav-item {
+            text-decoration: none;
+            color: var(--text-dark);
+            font-weight: 500;
+            font-size: 0.95rem;
+            cursor: pointer;
+            position: relative;
+            padding: 5px 0;
+        }
+
+        .nav-item:hover,
+        .nav-item.active {
+            color: var(--mid-green);
+        }
+
+        .nav-item.active::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background: var(--mid-green);
+            border-radius: 2px;
+        }
+
+        .search-btn,
+        .primary-btn {
+            background: var(--primary-green);
+            color: white;
+            padding: 8px 20px;
+            border-radius: 25px;
+            font-weight: 600;
+            cursor: pointer;
+            border: none;
+            transition: var(--transition);
+        }
+
+        .search-btn:hover,
+        .primary-btn:hover {
+            background: var(--light-green);
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-md);
+        }
+
+        .outline-btn {
+            background: white;
+            color: var(--primary-green);
+            border: 1px solid var(--mid-green);
+            padding: 6px 14px;
+            border-radius: 20px;
+            cursor: pointer;
+            margin-top: 12px;
+        }
+
+        .outline-btn:hover {
+            background: var(--accent-green);
+        }
+
+        .page {
+            display: none;
+            padding-top: 75px;
+        }
+
+        .page.active {
+            display: block;
+            animation: fadeIn 0.45s ease forwards;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .hero {
+            height: 520px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            background:
+                linear-gradient(rgba(0,0,0,0.58), rgba(0,0,0,0.55)),
+                url('https://files.metaso.cn/api/public-file/download?fileName=ai_images/eb37518a-bb30-4491-b18f-cfe43fea06a0.webp');
+            background-size: cover;
+            background-position: center;
+            color: white;
+            padding: 0 20px;
+        }
+
+        .hero h1 {
+            font-size: 3.2rem;
+            margin-bottom: 20px;
+            font-weight: 800;
+        }
+
+        .hero p {
+            font-size: 1.18rem;
+            max-width: 860px;
+            margin-bottom: 28px;
+        }
+
+        .hero-actions {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .stats-ribbon {
+            background: white;
+            max-width: 1100px;
+            margin: -60px auto 55px;
+            border-radius: 16px;
+            box-shadow: var(--shadow-md);
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            padding: 30px;
+            position: relative;
+            z-index: 10;
+        }
+
+        .stat-item {
+            text-align: center;
+            border-right: 1px solid #eee;
+        }
+
+        .stat-item:last-child {
+            border-right: none;
+        }
+
+        .stat-num {
+            font-size: 2rem;
+            font-weight: 800;
+            color: var(--primary-green);
+            display: block;
+        }
+
+        .stat-label {
+            color: var(--text-gray);
+            font-size: 0.9rem;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 55px auto;
+            padding: 0 20px;
+        }
+
+        .section-header {
+            font-size: 2rem;
+            color: var(--primary-green);
+            margin-bottom: 30px;
+            border-left: 6px solid var(--mid-green);
+            padding-left: 18px;
+        }
+
+        .sub-header {
+            font-size: 1.35rem;
+            color: var(--mid-green);
+            margin: 25px 0 14px;
+        }
+
+        .grid-2 {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 35px;
+            align-items: start;
+        }
+
+        .grid-3 {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 24px;
+        }
+
+        .card {
+            background: white;
+            border: 1px solid #eee;
+            border-radius: 14px;
+            padding: 24px;
+            box-shadow: var(--shadow-sm);
+            transition: var(--transition);
+        }
+
+        .card:hover {
+            transform: translateY(-4px);
+            box-shadow: var(--shadow-md);
+            border-color: var(--mint-green);
+        }
+
+        .entity-type {
+            background: var(--accent-green);
+            color: var(--primary-green);
+            padding: 2px 10px;
+            border-radius: 4px;
+            font-size: 0.8rem;
+            font-weight: bold;
+            display: inline-block;
+            margin-bottom: 12px;
+        }
+
+        .entity-title {
+            color: var(--mid-green);
+            font-size: 1.35rem;
+            margin-bottom: 8px;
+        }
+
+        .tag {
+            background: var(--bg-light);
+            padding: 4px 12px;
+            border-radius: 4px;
+            font-size: 0.85rem;
+            border: 1px solid #eee;
+            display: inline-block;
+            margin: 4px 5px 4px 0;
+        }
+
+        .notice-box {
+            background: var(--warning-bg);
+            border-left: 5px solid #f6b73c;
+            padding: 18px 20px;
+            border-radius: 10px;
+            margin: 25px 0;
+            color: #5c4300;
+        }
+
+        .ethics-box {
+            background: #f1f8f4;
+            border: 1px solid #cce8d6;
+            padding: 16px 18px;
+            border-radius: 10px;
+            margin: 25px 0;
+            color: var(--primary-green);
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 12px 14px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            outline: none;
+            margin: 8px 0 15px;
+            font-size: 0.95rem;
+        }
+
+        .form-control:focus {
+            border-color: var(--mid-green);
+            box-shadow: 0 0 0 3px rgba(82,183,136,0.15);
+        }
+
+        .search-layout {
+            display: grid;
+            grid-template-columns: 320px 1fr;
+            gap: 30px;
+        }
+
+        .result-item {
+            padding: 18px;
+            border-bottom: 1px solid #eee;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .result-item:hover {
+            background: var(--bg-light);
+        }
+
+        .type-badge {
+            font-size: 0.76rem;
+            background: #eee;
+            padding: 2px 8px;
+            border-radius: 4px;
+            margin-right: 8px;
+        }
+
+        .detail-panel {
+            background: white;
+            border-radius: 16px;
+            box-shadow: var(--shadow-md);
+            padding: 30px;
+            border: 1px solid #eee;
+        }
+
+        .detail-title {
+            color: var(--primary-green);
+            font-size: 2rem;
+            margin-bottom: 10px;
+        }
+
+        .meta-list {
+            list-style: none;
+            margin-top: 12px;
+        }
+
+        .meta-list li {
+            border-bottom: 1px dashed #e5e5e5;
+            padding: 6px 0;
+        }
+
+        .meta-key {
+            color: var(--text-gray);
+            min-width: 90px;
+            display: inline-block;
+        }
+
+        .link-chip {
+            display: inline-block;
+            background: #eef8f1;
+            border: 1px solid #cce8d6;
+            color: var(--primary-green);
+            padding: 3px 10px;
+            border-radius: 16px;
+            margin: 4px;
+            cursor: pointer;
+            font-size: 0.88rem;
+        }
+
+        .link-chip:hover {
+            background: var(--accent-green);
+        }
+
+        .detail-img {
+            border-radius: 14px;
+            overflow: hidden;
+            background: linear-gradient(135deg, #e9f7ef, #cdebd7);
+            min-height: 230px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--primary-green);
+            border: 1px solid #eee;
+            text-align: center;
+            padding: 20px;
+            font-weight: bold;
+        }
+
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+            gap: 22px;
+        }
+
+        .gallery-item {
+            border-radius: 14px;
+            overflow: hidden;
+            border: 1px solid #eee;
+            background: white;
+            box-shadow: var(--shadow-sm);
+            cursor: pointer;
+        }
+
+        .gallery-placeholder {
+            height: 180px;
+            background: linear-gradient(135deg, #e9f7ef, #cdebd7);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--primary-green);
+            font-weight: bold;
+            text-align: center;
+            padding: 15px;
+        }
+
+        .gallery-caption {
+            padding: 14px;
+            font-size: 0.9rem;
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(255,255,255,0.98);
+            z-index: 2000;
+            overflow-y: auto;
+            padding: 40px 20px;
+        }
+
+        .modal.active {
+            display: block;
+        }
+
+        .modal-content {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+        }
+
+        .close-modal {
+            font-size: 2.5rem;
+            cursor: pointer;
+            color: var(--text-gray);
+        }
+
+        .footer-disclaimer {
+            margin-top: 70px;
+            background: #10291f;
+            color: #e7f5ec;
+            padding: 28px 5%;
+            font-size: 0.9rem;
+        }
+
+        .footer-disclaimer strong {
+            color: #ffffff;
+        }
+
+        @media (max-width: 900px) {
+            .nav-links {
+                display: none;
+            }
+
+            .grid-2,
+            .search-layout {
+                grid-template-columns: 1fr;
+            }
+
+            .stats-ribbon {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 15px;
+            }
+
+            .hero h1 {
+                font-size: 2.25rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<nav class="navbar">
+    <div class="logo" onclick="switchPage('home')">
+        <svg width="30" height="30" viewBox="0 0 24 24" fill="none"
+             stroke="currentColor" stroke-width="2" stroke-linecap="round"
+             stroke-linejoin="round" style="color: var(--mid-green)">
+            <path d="m12 3-1.912 5.813a2 2 0 0 1-1.275 1.275L3 12l5.813 1.912a2 2 0 0 1 1.275 1.275L12 21l1.912-5.813a2 2 0 0 1 1.275-1.275L21 12l-5.813-1.912a2 2 0 0 1-1.275-1.275L12 3Z"/>
+        </svg>
+        傈僳族医药文化馆
+    </div>
+
+    <div class="nav-links">
+        <a class="nav-item active" data-page="home" onclick="switchPage('home')">首页</a>
+        <a class="nav-item" data-page="searchPage" onclick="switchPage('searchPage')">检索</a>
+        <a class="nav-item" data-page="inheritors" onclick="switchPage('inheritors')">传承人</a>
+        <a class="nav-item" data-page="diseases" onclick="switchPage('diseases')">病症</a>
+        <a class="nav-item" data-page="prescriptions" onclick="switchPage('prescriptions')">药方</a>
+        <a class="nav-item" data-page="herbs" onclick="switchPage('herbs')">草药</a>
+        <a class="nav-item" data-page="gallery" onclick="switchPage('gallery')">图片浏览</a>
+        <a class="nav-item" data-page="project" onclick="switchPage('project')">项目介绍</a>
+        <button class="search-btn" onclick="openSearch()">🔍 快速检索</button>
+    </div>
+</nav>
+
+<!-- 首页 -->
+<section id="home" class="page active">
+    <div class="hero">
+        <h1>高山峡谷间的本草智慧</h1>
+        <p>
+            这里展示的是云南傈僳族民间草医草药文化。很多知识来自老人讲述、草医经验和山地生活实践。
+            我们把传承人、病症、药方、草药放在一起，方便大家了解它们之间的关系。
+        </p>
+        <div class="hero-actions">
+            <button class="primary-btn" onclick="switchPage('searchPage')">进入检索</button>
+            <button class="primary-btn" onclick="switchPage('project')">了解项目</button>
+        </div>
+    </div>
+
+    <div class="stats-ribbon">
+        <div class="stat-item">
+            <span class="stat-num" id="statHerbs">0</span>
+            <span class="stat-label">草药档案</span>
+        </div>
+        <div class="stat-item">
+            <span class="stat-num" id="statPrescriptions">0</span>
+            <span class="stat-label">药方档案</span>
+        </div>
+        <div class="stat-item">
+            <span class="stat-num" id="statDiseases">0</span>
+            <span class="stat-label">病症档案</span>
+        </div>
+        <div class="stat-item">
+            <span class="stat-num" id="statInheritors">0</span>
+            <span class="stat-label">传承人档案</span>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="notice-box">
+            <strong>医疗免责声明：</strong>
+            本网站只是介绍民族医药文化，不是看病平台，也不提供处方。
+            如果身体不舒服，请去正规医院或咨询医生。不要自己采药、配药、服药。
+        </div>
+
+        <h2 class="section-header">项目简介</h2>
+        <div class="grid-2">
+            <div>
+                <p>
+                    傈僳族长期生活在高山峡谷地区，过去交通不方便，看病不容易。
+                    当地人就在长期生活中认识了许多草药，也形成了一些民间治疗经验。
+                </p>
+                <p>
+                    这个数字馆想做的事很简单：把这些容易被忘记的知识整理出来，
+                    让更多人知道它们的文化价值，也方便以后继续保护和研究。
+                </p>
+                <p>
+                    页面中的资料会尽量用普通话说明。涉及传承人的个人信息，我们会做隐藏处理；
+                    涉及药方的具体剂量和危险用法，也不会直接公开。
+                </p>
+            </div>
+
+            <div style="border-radius:16px; overflow:hidden; box-shadow:var(--shadow-lg);">
+                <img src="https://files.metaso.cn/api/public-file/download?fileName=ai_images/6f015ff4-3250-460e-ac4e-8c2e3915ee53.webp"
+                     alt="傈僳族草医整理草药">
+            </div>
+        </div>
+
+        <h2 class="section-header" style="margin-top:45px;">四类档案入口</h2>
+        <div class="grid-3">
+            <div class="card">
+                <span class="entity-type">传承人</span>
+                <h3 class="entity-title">谁在传承这些知识？</h3>
+                <p>记录草医、整理者、翻译者和民间讲述人。个人电话、住址等隐私信息不公开。</p>
+                <button class="outline-btn" onclick="switchPage('inheritors')">查看传承人</button>
+            </div>
+            <div class="card">
+                <span class="entity-type">病症</span>
+                <h3 class="entity-title">这些经验主要应对什么问题？</h3>
+                <p>用通俗语言介绍常见病症，比如跌打损伤、风湿疼痛、感冒发热等。</p>
+                <button class="outline-btn" onclick="switchPage('diseases')">查看病症</button>
+            </div>
+            <div class="card">
+                <span class="entity-type">药方</span>
+                <h3 class="entity-title">草药是怎样组合使用的？</h3>
+                <p>展示传统经验中的草药组合和使用场景，但不公开具体剂量。</p>
+                <button class="outline-btn" onclick="switchPage('prescriptions')">查看药方</button>
+            </div>
+            <div class="card">
+                <span class="entity-type">草药</span>
+                <h3 class="entity-title">山里有哪些常见草药？</h3>
+                <p>介绍草药名称、土名、样子、常见说法和关联药方。</p>
+                <button class="outline-btn" onclick="switchPage('herbs')">查看草药</button>
+            </div>
+        </div>
+    </div>
+
+    <footer class="footer-disclaimer">
+        <strong>伦理与医疗免责提示：</strong>
+        本页内容只用于文化展示和学习，不作为医疗建议。涉及访谈、图片和草药知识，请尊重原提供者和当地社区。
+    </footer>
+</section>
+
+<!-- 检索页 -->
+<section id="searchPage" class="page">
+    <div class="container">
+        <h2 class="section-header">检索中心</h2>
+
+        <div class="search-layout">
+            <aside class="card">
+                <h3 class="sub-header">高级检索</h3>
+
+                <label>关键词</label>
+                <input id="advKeyword" class="form-control" placeholder="例如：骨伤、止血、感冒">
+
+                <label>档案类型</label>
+                <select id="advType" class="form-control">
+                    <option value="">全部</option>
+                    <option value="inheritor">传承人</option>
+                    <option value="disease">病症</option>
+                    <option value="prescription">药方</option>
+                    <option value="herb">草药</option>
+                </select>
+
+                <label>关联草药</label>
+                <input id="advHerb" class="form-control" placeholder="例如：草血竭">
+
+                <label>关联病症</label>
+                <input id="advDisease" class="form-control" placeholder="例如：跌打损伤">
+
+                <label>关联传承人</label>
+                <input id="advInheritor" class="form-control" placeholder="例如：朱瑞林">
+
+                <button class="primary-btn" onclick="advancedSearch()">开始检索</button>
+                <button class="outline-btn" onclick="resetSearch()">重置</button>
+            </aside>
+
+            <main class="card">
+                <h3 class="sub-header">简单全文检索</h3>
+                <input id="simpleSearchInput" class="form-control"
+                       placeholder="输入传承人、病症、药方或草药名称..."
+                       oninput="simpleSearch(this.value)">
+                <p id="searchPageInfo" style="color:var(--text-gray); margin-bottom:12px;">
+                    可以直接输入关键词，也可以用左边的高级检索。
+                </p>
+                <div id="searchPageResults"></div>
+            </main>
+        </div>
+    </div>
+
+    <footer class="footer-disclaimer">
+        <strong>医疗免责提示：</strong>
+        检索到的内容只是资料记录，不代表可以自行使用。请勿根据网页内容自行采药或服药。
+    </footer>
+</section>
+
+<!-- 传承人 -->
+<section id="inheritors" class="page">
+    <div class="container">
+        <h2 class="section-header">传承人档案</h2>
+        <div id="inheritorList" class="grid-3"></div>
+    </div>
+
+    <footer class="footer-disclaimer">
+        <strong>伦理提示：</strong>
+        传承人资料已经做隐私处理。个人联系方式、具体住址等敏感信息不会公开。
+    </footer>
+</section>
+
+<!-- 病症 -->
+<section id="diseases" class="page">
+    <div class="container">
+        <h2 class="section-header">病症档案</h2>
+        <div id="diseaseList" class="grid-3"></div>
+    </div>
+
+    <footer class="footer-disclaimer">
+        <strong>医疗免责提示：</strong>
+        病症介绍只是为了帮助理解民间经验，不等于医学诊断。
+    </footer>
+</section>
+
+<!-- 药方 -->
+<section id="prescriptions" class="page">
+    <div class="container">
+        <h2 class="section-header">药方档案</h2>
+        <div id="prescriptionList" class="grid-3"></div>
+    </div>
+
+    <footer class="footer-disclaimer">
+        <strong>医疗免责提示：</strong>
+        药方内容只做文化展示，不公开具体剂量，也不建议自行尝试。
+    </footer>
+</section>
+
+<!-- 草药 -->
+<section id="herbs" class="page">
+    <div class="container">
+        <h2 class="section-header">草药档案</h2>
+        <div id="herbList" class="grid-3"></div>
+    </div>
+
+    <footer class="footer-disclaimer">
+        <strong>医疗免责提示：</strong>
+        野外草药容易认错，有些草药也可能有毒。请勿自行采摘、服用。
+    </footer>
+</section>
+
+<!-- 详情页 -->
+<section id="detail" class="page">
+    <div class="container">
+        <button class="outline-btn" onclick="goBackToLastList()">← 返回上一页</button>
+        <div id="detailContent" class="detail-panel" style="margin-top:20px;"></div>
+    </div>
+
+    <footer class="footer-disclaimer">
+        <strong>医疗免责提示：</strong>
+        详情页内容只作文化介绍，不作为治病、配药或服药依据。
+    </footer>
+</section>
+
+<!-- 图片浏览 -->
+<section id="gallery" class="page">
+    <div class="container">
+        <h2 class="section-header">图片浏览</h2>
+        <p style="color:var(--text-gray); margin-bottom:20px;">
+            这里展示草药标本、田野调查、访谈场景等图片。当前为网页原型，部分图片使用占位展示。
+        </p>
+        <div id="galleryList" class="gallery-grid"></div>
+    </div>
+
+    <footer class="footer-disclaimer">
+        <strong>版权提示：</strong>
+        图片资料涉及拍摄者和受访者权益，未经允许不得下载、转载或商用。
+    </footer>
+</section>
+
+<!-- 项目介绍 -->
+<section id="project" class="page">
+    <div class="container">
+        <h2 class="section-header">项目介绍</h2>
+
+        <div class="card">
+            <h3 class="sub-header">一、为什么做这个项目？</h3>
+            <p>
+                很多民族医药知识以前主要靠老人讲、师傅带徒弟、家里一代代传。
+                如果不及时记录，有些知识可能会慢慢消失。
+                所以我们用网页的方式，把这些资料整理成容易查看的数字档案。
+            </p>
+        </div>
+
+        <div class="card" style="margin-top:20px;">
+            <h3 class="sub-header">二、资料从哪里来？</h3>
+            <p>
+                资料主要来自田野访谈、公开文献整理、草药图片记录和相关传承人口述。
+                对于不确定的内容，我们会标注“待核验”，意思是以后还需要继续确认。
+            </p>
+        </div>
+
+        <div class="card" style="margin-top:20px;">
+            <h3 class="sub-header">三、怎样保护隐私？</h3>
+            <p>
+                网页不会公开传承人的详细住址、电话、身份证号等个人信息。
+                如果涉及访谈录音、照片和家庭资料，需要得到本人或相关权利人的同意后才能展示。
+            </p>
+        </div>
+
+        <div class="card" style="margin-top:20px;">
+            <h3 class="sub-header">四、版权和使用说明</h3>
+            <p>
+                本馆内容主要用于课程展示、文化保护和学习交流。
+                不能把网页中的药方拿去做广告，也不能未经允许把图片和访谈资料用于商业用途。
+            </p>
+        </div>
+
+        <div class="card" style="margin-top:20px;">
+            <h3 class="sub-header">五、医疗提醒</h3>
+            <p>
+                草药知识很有文化价值，但不代表所有人都适合使用。
+                有些草药名字相似、外形相似，容易认错；有些草药还可能有毒。
+                如果生病，应当去正规医疗机构就诊。
+            </p>
+        </div>
+    </div>
+
+    <footer class="footer-disclaimer">
+        <strong>伦理与医疗免责提示：</strong>
+        项目内容用于文化展示，不作为任何医疗疗效承诺。
+    </footer>
+</section>
+
+<!-- 快速检索弹窗 -->
+<div id="searchModal" class="modal">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h2 style="color: var(--primary-green);">全库快速检索</h2>
+            <span class="close-modal" onclick="closeSearch()">&times;</span>
+        </div>
+
+        <input type="text" id="modalSearchInput" class="form-control"
+               style="font-size:1.25rem; padding:18px;"
+               placeholder="输入草药、病症、药方、传承人..."
+               oninput="modalSearch(this.value)">
+
+        <div id="modalSearchInfo" style="color:var(--text-gray); margin-bottom:14px;">
+            请输入关键词进行实时检索。
+        </div>
+
+        <div id="modalSearchResults"></div>
+    </div>
+</div>
+
+<!-- 图片预览弹窗 -->
+<div id="imageModal" class="modal">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h2 id="imageModalTitle" style="color:var(--primary-green);">图片预览</h2>
+            <span class="close-modal" onclick="closeImageModal()">&times;</span>
+        </div>
+        <div class="gallery-placeholder" id="imageModalBody" style="height:420px;"></div>
+    </div>
+</div>
+
+<script>
+    let lastListPage = 'home';
+
+    const db = {
+        inheritors: [
+            {
+                id: 'i1',
+                type: 'inheritor',
+                name: '朱瑞林',
+                alias: '朱氏骨伤诊疗法传承人',
+                title: '民间骨伤经验传承人',
+                privacy: '联系方式、详细住址已隐藏',
+                region: '云南丽江、怒江一带',
+                interview: '他长期接触山地地区常见的跌打损伤和骨伤问题，重视手法、外用草药和休养相结合。',
+                prescriptions: ['p1', 'p2'],
+                desc: '擅长整理和使用与骨伤、跌打损伤有关的草药经验。',
+                tags: ['骨伤', '跌打', '草药外用']
+            },
+            {
+                id: 'i2',
+                type: 'inheritor',
+                name: '胡兰英',
+                alias: '傈僳语资料整理者',
+                title: '民族语言和草药名称整理人员',
+                privacy: '联系方式已隐藏',
+                region: '滇西北民族地区',
+                interview: '她主要帮助整理草药的汉语名称、傈僳语名称和当地土名，让不同地方的人能更好理解。',
+                prescriptions: ['p3'],
+                desc: '擅长做草药名称翻译和口述资料整理。',
+                tags: ['语言整理', '药名翻译', '资料记录']
+            },
+            {
+                id: 'i3',
+                type: 'inheritor',
+                name: '李阿婆',
+                alias: '村寨草药讲述人',
+                title: '民间草药知识讲述人',
+                privacy: '姓名为化名，住址已隐藏',
+                region: '怒江峡谷村寨',
+                interview: '她从长辈那里学到一些常见草药用法，尤其熟悉感冒、咳嗽、肚子不舒服等日常小病的民间处理方式。',
+                prescriptions: ['p5', 'p6'],
+                desc: '熟悉村寨日常生活中的草药经验。',
+                tags: ['口述资料', '日常草药', '村寨经验']
+            },
+            {
+                id: 'i4',
+                type: 'inheritor',
+                name: '阿木师傅',
+                alias: '山地采药人',
+                title: '熟悉山林草药的采药人',
+                privacy: '姓名为化名，具体住址不公开',
+                region: '高黎贡山周边',
+                interview: '他熟悉不同草药的生长环境，知道哪些草药长在山坡、溪边、林下或石缝边。',
+                prescriptions: ['p4', 'p7'],
+                desc: '主要提供草药生长地点、采集季节和辨认经验。',
+                tags: ['采药经验', '山林知识', '草药辨认']
+            },
+            {
+                id: 'i5',
+                type: 'inheritor',
+                name: '基层草医群体',
+                alias: '乡村草医代表',
+                title: '长期服务村寨的基层草医',
+                privacy: '群体资料，不公开个人隐私',
+                region: '怒江、丽江、保山等地部分村寨',
+                interview: '他们常年在村寨中帮助群众处理一些常见问题，也保存了不少口头流传的草药知识。',
+                prescriptions: ['p1', 'p5', 'p8'],
+                desc: '代表许多默默传承民间草药知识的基层草医。',
+                tags: ['基层草医', '村寨医疗', '民间经验']
+            }
+        ],
+
+        diseases: [
+            {
+                id: 'd1',
+                type: 'disease',
+                name: '跌打损伤',
+                lisuName: '傈僳名称：待田野核验',
+                symptoms: '摔伤、扭伤、瘀青、肿痛、活动不方便。',
+                prescriptions: ['p1', 'p2'],
+                desc: '山路多、劳作多，跌倒、扭伤和碰伤比较常见，所以相关草药经验也比较多。',
+                tags: ['外伤', '肿痛', '骨伤']
+            },
+            {
+                id: 'd2',
+                type: 'disease',
+                name: '风湿疼痛',
+                lisuName: '傈僳名称：待田野核验',
+                symptoms: '关节疼、腰腿疼，阴雨天或受凉后可能更明显。',
+                prescriptions: ['p2', 'p4'],
+                desc: '山区湿气重、劳作辛苦，很多老人会提到风湿和筋骨疼痛。',
+                tags: ['关节痛', '腰腿痛', '寒湿']
+            },
+            {
+                id: 'd3',
+                type: 'disease',
+                name: '湿热黄疸',
+                lisuName: '傈僳名称：待田野核验',
+                symptoms: '脸色或眼睛发黄、身体乏力、胃口差。',
+                prescriptions: ['p3'],
+                desc: '传统经验中常会用一些清热、利湿的草药来记录这类问题。',
+                tags: ['湿热', '黄疸', '清热']
+            },
+            {
+                id: 'd4',
+                type: 'disease',
+                name: '感冒发热',
+                lisuName: '傈僳名称：待田野核验',
+                symptoms: '怕冷、发热、鼻塞、咳嗽、头痛。',
+                prescriptions: ['p5'],
+                desc: '村寨生活中很常见。民间会用一些发汗、清热或缓解咳嗽的草药。',
+                tags: ['感冒', '发热', '咳嗽']
+            },
+            {
+                id: 'd5',
+                type: 'disease',
+                name: '肚子不舒服',
+                lisuName: '傈僳名称：待田野核验',
+                symptoms: '腹胀、腹痛、拉肚子、吃东西不消化。',
+                prescriptions: ['p6'],
+                desc: '过去饮食保存条件有限，肠胃不舒服在民间经验中很常见。',
+                tags: ['腹痛', '腹泻', '消化']
+            },
+            {
+                id: 'd6',
+                type: 'disease',
+                name: '小儿疳积',
+                lisuName: '傈僳名称：待田野核验',
+                symptoms: '孩子瘦弱、吃得少、精神差、长得慢。',
+                prescriptions: ['p8'],
+                desc: '这是民间对儿童长期营养差、消化弱等情况的一种传统说法。',
+                tags: ['儿童', '调理', '消化']
+            },
+            {
+                id: 'd7',
+                type: 'disease',
+                name: '皮肤疮疖',
+                lisuName: '傈僳名称：待田野核验',
+                symptoms: '皮肤红肿、疼痛、起疮、局部化脓。',
+                prescriptions: ['p7'],
+                desc: '山区劳动中容易被虫咬、划伤，皮肤感染类问题也会被民间草药经验记录。',
+                tags: ['皮肤', '红肿', '清热解毒']
+            }
+        ],
+
+        prescriptions: [
+            {
+                id: 'p1',
+                type: 'prescription',
+                name: '跌打止血方',
+                source: '朱瑞林及基层草医经验整理',
+                inheritors: ['i1', 'i5'],
+                diseases: ['d1'],
+                herbs: ['h2', 'h4'],
+                usage: '多用于外伤、瘀肿、出血等场景。网页不公开具体剂量和炮制方法。',
+                desc: '这是关于跌打外伤的传统经验方，重点是止血、消肿和缓解疼痛。',
+                tags: ['跌打', '止血', '外用']
+            },
+            {
+                id: 'p2',
+                type: 'prescription',
+                name: '骨伤舒筋方',
+                source: '民间骨伤经验整理',
+                inheritors: ['i1'],
+                diseases: ['d1', 'd2'],
+                herbs: ['h4', 'h5', 'h6'],
+                usage: '传统上多与外敷、擦洗、休养配合。具体用法不公开。',
+                desc: '用于记录骨伤、筋骨疼痛和关节不舒服相关的民间草药搭配。',
+                tags: ['骨伤', '舒筋', '关节痛']
+            },
+            {
+                id: 'p3',
+                type: 'prescription',
+                name: '清热利湿方',
+                source: '双语资料和民间讲述整理',
+                inheritors: ['i2'],
+                diseases: ['d3'],
+                herbs: ['h3', 'h10'],
+                usage: '传统上用于清热、利湿方向。具体剂量不公开。',
+                desc: '主要记录湿热、黄疸、身体发黄等民间说法中会提到的草药。',
+                tags: ['清热', '利湿', '黄疸']
+            },
+            {
+                id: 'p4',
+                type: 'prescription',
+                name: '祛风除湿方',
+                source: '山地采药人口述资料',
+                inheritors: ['i4'],
+                diseases: ['d2'],
+                herbs: ['h5', 'h6', 'h11'],
+                usage: '常见于风湿疼痛、腰腿痛等传统经验记录。不可自行使用。',
+                desc: '记录山区老人常提到的“受寒受湿后筋骨痛”相关草药经验。',
+                tags: ['风湿', '腰腿痛', '祛风除湿']
+            },
+            {
+                id: 'p5',
+                type: 'prescription',
+                name: '感冒发热方',
+                source: '李阿婆和基层草医口述整理',
+                inheritors: ['i3', 'i5'],
+                diseases: ['d4'],
+                herbs: ['h9', 'h10'],
+                usage: '传统上用于感冒初起、发热、咳嗽等情况。具体用法不公开。',
+                desc: '村寨里常见的日常草药经验，主要与感冒、发热、咳嗽有关。',
+                tags: ['感冒', '发热', '咳嗽']
+            },
+            {
+                id: 'p6',
+                type: 'prescription',
+                name: '肠胃调理方',
+                source: '村寨日常经验整理',
+                inheritors: ['i3'],
+                diseases: ['d5'],
+                herbs: ['h12', 'h13'],
+                usage: '传统上用于肚子胀、消化不舒服等情况。网页不作服用指导。',
+                desc: '记录民间对肚子不舒服、吃坏东西、消化差等问题的处理经验。',
+                tags: ['肠胃', '腹胀', '消化']
+            },
+            {
+                id: 'p7',
+                type: 'prescription',
+                name: '皮肤清热方',
+                source: '采药人与村寨草医资料整理',
+                inheritors: ['i4'],
+                diseases: ['d7'],
+                herbs: ['h3', 'h14'],
+                usage: '传统记录中多与外洗、外敷有关。具体方法不公开。',
+                desc: '用于记录皮肤红肿、疮疖等问题中提到的清热解毒类草药。',
+                tags: ['皮肤', '疮疖', '清热解毒']
+            },
+            {
+                id: 'p8',
+                type: 'prescription',
+                name: '小儿疳积调理方',
+                source: '基层草医和民间口述资料',
+                inheritors: ['i5'],
+                diseases: ['d6'],
+                herbs: ['h7', 'h8'],
+                usage: '涉及儿童，风险更高。本馆不提供具体使用方法。',
+                desc: '记录民间关于儿童食少、瘦弱、消化差等问题的传统说法。',
+                tags: ['儿童', '调理', '慎用']
+            }
+        ],
+
+        herbs: [
+            {
+                id: 'h1',
+                type: 'herb',
+                name: '化骨丹',
+                localName: '土名：待核验',
+                specimen: '化骨丹标本图',
+                properties: '民间传说色彩较强，实际使用需非常谨慎。',
+                prescriptions: [],
+                inheritors: [],
+                desc: '在一些民间故事中经常被提到，更多体现的是人们对山中草药力量的想象和敬畏。',
+                tags: ['民间传说', '高山草药']
+            },
+            {
+                id: 'h2',
+                type: 'herb',
+                name: '草血竭',
+                localName: '土名：待核验',
+                specimen: '草血竭根茎图',
+                properties: '传统说法中常与止血、外伤有关。',
+                prescriptions: ['p1'],
+                inheritors: ['i1'],
+                desc: '民间常把它和跌打损伤、创伤出血联系在一起，是山地外伤经验中常出现的草药。',
+                tags: ['止血', '跌打', '外伤']
+            },
+            {
+                id: 'h3',
+                type: 'herb',
+                name: '遍地金',
+                localName: '土名：待核验',
+                specimen: '遍地金全株图',
+                properties: '传统说法中常与清热、利湿有关。',
+                prescriptions: ['p3', 'p7'],
+                inheritors: ['i2', 'i4'],
+                desc: '常出现在清热、利湿、皮肤红肿等民间经验记录里。',
+                tags: ['清热', '利湿', '皮肤']
+            },
+            {
+                id: 'h4',
+                type: 'herb',
+                name: '大麻药',
+                localName: '土名：待核验',
+                specimen: '大麻药药材图',
+                properties: '传统说法中与止痛、骨伤有关，但也可能有风险。',
+                prescriptions: ['p1', 'p2'],
+                inheritors: ['i1'],
+                desc: '在骨伤和疼痛经验中常被提到，但这类草药不能随便使用，需要专业判断。',
+                tags: ['止痛', '骨伤', '慎用']
+            },
+            {
+                id: 'h5',
+                type: 'herb',
+                name: '八角枫',
+                localName: '土名：待核验',
+                specimen: '八角枫根部图',
+                properties: '传统说法中与祛风除湿、舒筋有关。',
+                prescriptions: ['p2', 'p4'],
+                inheritors: ['i1', 'i4'],
+                desc: '常见于风湿疼痛、筋骨不舒服等经验记录中。',
+                tags: ['风湿', '舒筋', '腰腿痛']
+            },
+            {
+                id: 'h6',
+                type: 'herb',
+                name: '刺老包',
+                localName: '土名：待核验',
+                specimen: '刺老包嫩芽图',
+                properties: '民间有药食同源说法，嫩芽也可见于地方饮食。',
+                prescriptions: ['p2', 'p4'],
+                inheritors: ['i4'],
+                desc: '既出现在草药经验中，也和地方饮食文化有关。',
+                tags: ['药食同源', '强筋骨', '山野菜']
+            },
+            {
+                id: 'h7',
+                type: 'herb',
+                name: '一支箭',
+                localName: '土名：待核验',
+                specimen: '一支箭全株图',
+                properties: '传统说法中与儿童调理有关。',
+                prescriptions: ['p8'],
+                inheritors: ['i5'],
+                desc: '在一些民间儿科经验中被提到，但儿童用药风险高，不建议自行尝试。',
+                tags: ['儿童', '调理', '慎用']
+            },
+            {
+                id: 'h8',
+                type: 'herb',
+                name: '青刺头',
+                localName: '土名：待核验',
+                specimen: '青刺头图',
+                properties: '传统说法中与安神、惊风有关。',
+                prescriptions: ['p8'],
+                inheritors: ['i5'],
+                desc: '常和小儿惊风、烦躁等传统说法联系在一起。',
+                tags: ['安神', '儿童', '慎用']
+            },
+            {
+                id: 'h9',
+                type: 'herb',
+                name: '野薄荷',
+                localName: '土名：待核验',
+                specimen: '野薄荷叶片图',
+                properties: '民间常说可用于清凉、缓解鼻塞。',
+                prescriptions: ['p5'],
+                inheritors: ['i3'],
+                desc: '气味清凉，村寨里常把它和感冒、头痛、鼻塞等日常问题联系起来。',
+                tags: ['感冒', '清凉', '鼻塞']
+            },
+            {
+                id: 'h10',
+                type: 'herb',
+                name: '鱼腥草',
+                localName: '土名：待核验',
+                specimen: '鱼腥草全株图',
+                properties: '传统说法中与清热、咳嗽、湿热有关。',
+                prescriptions: ['p3', 'p5'],
+                inheritors: ['i2', 'i3'],
+                desc: '很多地方都认识这种草，常用于清热类民间经验记录。',
+                tags: ['清热', '咳嗽', '湿热']
+            },
+            {
+                id: 'h11',
+                type: 'herb',
+                name: '伸筋草',
+                localName: '土名：待核验',
+                specimen: '伸筋草图',
+                properties: '传统说法中与舒筋活络有关。',
+                prescriptions: ['p4'],
+                inheritors: ['i4'],
+                desc: '名字里有“伸筋”，民间常把它和筋骨不舒服联系在一起。',
+                tags: ['舒筋', '风湿', '关节']
+            },
+            {
+                id: 'h12',
+                type: 'herb',
+                name: '山楂',
+                localName: '土名：待核验',
+                specimen: '山楂果实图',
+                properties: '民间常说可帮助消化。',
+                prescriptions: ['p6'],
+                inheritors: ['i3'],
+                desc: '在日常生活中比较容易理解，常被用于消食、开胃的经验说法中。',
+                tags: ['消化', '开胃', '肠胃']
+            },
+            {
+                id: 'h13',
+                type: 'herb',
+                name: '鸡内金',
+                localName: '土名：待核验',
+                specimen: '鸡内金药材图',
+                properties: '传统说法中与消食、健胃有关。',
+                prescriptions: ['p6'],
+                inheritors: ['i3'],
+                desc: '常见于民间关于孩子或大人消化差、积食的经验记录。',
+                tags: ['消食', '肠胃', '积食']
+            },
+            {
+                id: 'h14',
+                type: 'herb',
+                name: '蒲公英',
+                localName: '土名：待核验',
+                specimen: '蒲公英全株图',
+                properties: '传统说法中与清热解毒、皮肤红肿有关。',
+                prescriptions: ['p7'],
+                inheritors: ['i4'],
+                desc: '很多地方都认识蒲公英，民间常把它和清热、皮肤红肿联系起来。',
+                tags: ['清热解毒', '皮肤', '疮疖']
+            }
+        ]
+    };
+
+    const typeNameMap = {
+        inheritor: '传承人',
+        disease: '病症',
+        prescription: '药方',
+        herb: '草药'
+    };
+
+    const pageMap = {
+        inheritor: 'inheritors',
+        disease: 'diseases',
+        prescription: 'prescriptions',
+        herb: 'herbs'
+    };
+
+    const DB_NAME = 'lisu-herbal-culture';
+    const DB_VERSION = 1;
+    const ENTITY_STORE = 'entities';
+    let databasePromise;
+
+    function openDatabase() {
+        if (databasePromise) return databasePromise;
+
+        databasePromise = new Promise((resolve, reject) => {
+            const request = indexedDB.open(DB_NAME, DB_VERSION);
+            request.onupgradeneeded = () => {
+                const database = request.result;
+                const store = database.createObjectStore(ENTITY_STORE, { keyPath: 'id' });
+                store.createIndex('type', 'type', { unique: false });
+            };
+            request.onsuccess = () => resolve(request.result);
+            request.onerror = () => reject(request.error);
+        });
+
+        return databasePromise;
+    }
+
+    function transactionRequest(mode, operation) {
+        return openDatabase().then(database => new Promise((resolve, reject) => {
+            const transaction = database.transaction(ENTITY_STORE, mode);
+            const request = operation(transaction.objectStore(ENTITY_STORE));
+            request.onsuccess = () => resolve(request.result);
+            request.onerror = () => reject(request.error);
+        }));
+    }
+
+    async function seedDatabase() {
+        const existing = await transactionRequest('readonly', store => store.count());
+        if (existing > 0) return;
+
+        const entities = allSeedEntities();
+        await openDatabase().then(database => new Promise((resolve, reject) => {
+            const transaction = database.transaction(ENTITY_STORE, 'readwrite');
+            const store = transaction.objectStore(ENTITY_STORE);
+            entities.forEach(entity => store.put(entity));
+            transaction.oncomplete = resolve;
+            transaction.onerror = () => reject(transaction.error);
+        }));
+    }
+
+    function allSeedEntities() {
+        return [
+            ...db.inheritors,
+            ...db.diseases,
+            ...db.prescriptions,
+            ...db.herbs
+        ];
+    }
+
+    function allEntities() {
+        return transactionRequest('readonly', store => store.getAll());
+    }
+
+    function getEntitiesByType(type) {
+        return transactionRequest('readonly', store => store.index('type').getAll(type));
+    }
+
+    function getEntityById(id) {
+        return transactionRequest('readonly', store => store.get(id));
+    }
+
+    function entityText(entity) {
+        return JSON.stringify(entity).toLowerCase();
+    }
+
+    function switchPage(pageId) {
+        document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+        document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+
+        const targetPage = document.getElementById(pageId);
+        if (targetPage) targetPage.classList.add('active');
+
+        const navItem = document.querySelector(`.nav-item[data-page="${pageId}"]`);
+        if (navItem) navItem.classList.add('active');
+
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    async function renderStats() {
+        const [herbs, prescriptions, diseases, inheritors] = await Promise.all([
+            getEntitiesByType('herb'),
+            getEntitiesByType('prescription'),
+            getEntitiesByType('disease'),
+            getEntitiesByType('inheritor')
+        ]);
+        document.getElementById('statHerbs').innerText = herbs.length;
+        document.getElementById('statPrescriptions').innerText = prescriptions.length;
+        document.getElementById('statDiseases').innerText = diseases.length;
+        document.getElementById('statInheritors').innerText = inheritors.length;
+    }
+
+    async function renderInheritors() {
+        const box = document.getElementById('inheritorList');
+        const records = await getEntitiesByType('inheritor');
+        box.innerHTML = records.map(item => `
+            <div class="card">
+                <span class="entity-type">传承人</span>
+                <h3 class="entity-title">${item.name}</h3>
+                <p>${item.title}</p>
+                <p><strong>隐私处理：</strong>${item.privacy}</p>
+                <p>${item.desc}</p>
+                <div>${item.tags.map(t => `<span class="tag">${t}</span>`).join('')}</div>
+                <button class="outline-btn" onclick="showDetail('inheritor','${item.id}')">查看详情</button>
+            </div>
+        `).join('');
+    }
+
+    async function renderDiseases() {
+        const box = document.getElementById('diseaseList');
+        const records = await getEntitiesByType('disease');
+        box.innerHTML = records.map(item => `
+            <div class="card">
+                <span class="entity-type">病症</span>
+                <h3 class="entity-title">${item.name}</h3>
+                <p><strong>傈僳名称：</strong>${item.lisuName}</p>
+                <p><strong>常见表现：</strong>${item.symptoms}</p>
+                <p>${item.desc}</p>
+                <button class="outline-btn" onclick="showDetail('disease','${item.id}')">查看详情</button>
+            </div>
+        `).join('');
+    }
+
+    async function renderPrescriptions() {
+        const box = document.getElementById('prescriptionList');
+        const records = await getEntitiesByType('prescription');
+        box.innerHTML = records.map(item => `
+            <div class="card">
+                <span class="entity-type">药方</span>
+                <h3 class="entity-title">${item.name}</h3>
+                <p><strong>资料来源：</strong>${item.source}</p>
+                <p>${item.desc}</p>
+                <div>${item.tags.map(t => `<span class="tag">${t}</span>`).join('')}</div>
+                <button class="outline-btn" onclick="showDetail('prescription','${item.id}')">查看详情</button>
+            </div>
+        `).join('');
+    }
+
+    async function renderHerbs() {
+        const box = document.getElementById('herbList');
+        const records = await getEntitiesByType('herb');
+        box.innerHTML = records.map(item => `
+            <div class="card">
+                <span class="entity-type">草药</span>
+                <h3 class="entity-title">${item.name}</h3>
+                <p><strong>土名：</strong>${item.localName}</p>
+                <p>${item.desc}</p>
+                <div>${item.tags.map(t => `<span class="tag">${t}</span>`).join('')}</div>
+                <button class="outline-btn" onclick="showDetail('herb','${item.id}')">查看详情</button>
+            </div>
+        `).join('');
+    }
+
+    async function renderGallery() {
+        const herbs = await getEntitiesByType('herb');
+        const items = [
+            ...herbs.map(h => ({
+                title: h.name + ' 标本图片',
+                caption: h.specimen,
+                owner: h.name
+            })),
+            { title: '田野访谈场景', caption: '访问传承人和村寨老人时形成的图片资料。', owner: '访谈档案' },
+            { title: '草药晾晒场景', caption: '采回草药后进行清理、晾晒的场景。', owner: '田野图片' },
+            { title: '山地采药路线', caption: '记录草药生长环境和采集路线。', owner: '田野调查' }
+        ];
+
+        document.getElementById('galleryList').innerHTML = items.map(item => `
+            <div class="gallery-item" onclick="openImageModal('${item.title}', '${item.caption}')">
+                <div class="gallery-placeholder">图片占位<br>${item.title}</div>
+                <div class="gallery-caption">
+                    <strong>${item.title}</strong><br>
+                    ${item.caption}<br>
+                    <span style="color:var(--text-gray);">关联：${item.owner}</span>
+                </div>
+            </div>
+        `).join('');
+    }
+
+    async function relationChips(ids) {
+        if (!ids || ids.length === 0) {
+            return '<span style="color:var(--text-gray);">暂无关联记录</span>';
+        }
+
+        const entities = await Promise.all(ids.map(id => getEntityById(id)));
+        return entities.filter(Boolean).map(entity => `<span class="link-chip" onclick="showDetail('${entity.type}','${entity.id}')">${typeNameMap[entity.type]}：${entity.name}</span>`).join('');
+    }
+
+    async function showDetail(type, id) {
+        lastListPage = pageMap[type] || 'home';
+        const item = await getEntityById(id);
+        if (!item) return;
+
+        let html = '';
+
+        if (type === 'inheritor') {
+            html = `
+                <div class="grid-2">
+                    <div>
+                        <h2 class="detail-title">${item.name}</h2>
+                        <span class="entity-type">传承人档案</span>
+                        <ul class="meta-list">
+                            <li><span class="meta-key">身份：</span>${item.title}</li>
+                            <li><span class="meta-key">地区：</span>${item.region}</li>
+                            <li><span class="meta-key">隐私：</span>${item.privacy}</li>
+                        </ul>
+                        <h3 class="sub-header">访谈摘要</h3>
+                        <p>${item.interview}</p>
+                        <h3 class="sub-header">相关药方</h3>
+                        ${await relationChips(item.prescriptions)}
+                    </div>
+                    <div class="detail-img">传承人照片 / 访谈音频资源占位</div>
+                </div>
+            `;
+        }
+
+        if (type === 'disease') {
+            html = `
+                <h2 class="detail-title">${item.name}</h2>
+                <span class="entity-type">病症档案</span>
+                <ul class="meta-list">
+                    <li><span class="meta-key">汉名：</span>${item.name}</li>
+                    <li><span class="meta-key">傈僳名称：</span>${item.lisuName}</li>
+                    <li><span class="meta-key">常见表现：</span>${item.symptoms}</li>
+                </ul>
+                <h3 class="sub-header">通俗说明</h3>
+                <p>${item.desc}</p>
+                <h3 class="sub-header">相关药方</h3>
+                ${await relationChips(item.prescriptions)}
+            `;
+        }
+
+        if (type === 'prescription') {
+            html = `
+                <h2 class="detail-title">${item.name}</h2>
+                <span class="entity-type">药方档案</span>
+                <ul class="meta-list">
+                    <li><span class="meta-key">来源：</span>${item.source}</li>
+                    <li><span class="meta-key">用法说明：</span>${item.usage}</li>
+                    <li><span class="meta-key">简介：</span>${item.desc}</li>
+                </ul>
+                <h3 class="sub-header">草药组成</h3>
+                ${await relationChips(item.herbs)}
+                <h3 class="sub-header">对应病症</h3>
+                ${await relationChips(item.diseases)}
+                <h3 class="sub-header">相关传承人</h3>
+                ${await relationChips(item.inheritors)}
+            `;
+        }
+
+        if (type === 'herb') {
+            html = `
+                <div class="grid-2">
+                    <div>
+                        <h2 class="detail-title">${item.name}</h2>
+                        <span class="entity-type">草药档案</span>
+                        <ul class="meta-list">
+                            <li><span class="meta-key">土名：</span>${item.localName}</li>
+                            <li><span class="meta-key">标本：</span>${item.specimen}</li>
+                            <li><span class="meta-key">民间说法：</span>${item.properties}</li>
+                        </ul>
+                        <h3 class="sub-header">通俗说明</h3>
+                        <p>${item.desc}</p>
+                        <h3 class="sub-header">相关药方</h3>
+                        ${await relationChips(item.prescriptions)}
+                        <h3 class="sub-header">相关传承人</h3>
+                        ${await relationChips(item.inheritors)}
+                    </div>
+                    <div class="detail-img">草药标本图片占位<br>${item.specimen}</div>
+                </div>
+            `;
+        }
+
+        document.getElementById('detailContent').innerHTML = html;
+        switchPage('detail');
+    }
+
+    function goBackToLastList() {
+        switchPage(lastListPage);
+    }
+
+    function makeResultHTML(results) {
+        if (results.length === 0) {
+            return '<p style="padding:15px;color:var(--text-gray);">没有找到相关内容，可以换个词试试。</p>';
+        }
+
+        return results.map(item => `
+            <div class="result-item" onclick="showDetail('${item.type}', '${item.id}')">
+                <span class="type-badge">${typeNameMap[item.type]}</span>
+                <strong>${item.name}</strong>
+                <p style="color:var(--text-gray);">${item.desc || item.symptoms || ''}</p>
+            </div>
+        `).join('');
+    }
+
+    async function simpleSearch(keyword) {
+        const q = keyword.trim().toLowerCase();
+        const info = document.getElementById('searchPageInfo');
+        const box = document.getElementById('searchPageResults');
+
+        if (!q) {
+            info.innerText = '可以直接输入关键词，也可以用左边的高级检索。';
+            box.innerHTML = '';
+            return;
+        }
+
+        const records = await allEntities();
+        const results = records.filter(item => entityText(item).includes(q));
+        info.innerText = `找到 ${results.length} 条相关内容。`;
+        box.innerHTML = makeResultHTML(results);
+    }
+
+    async function advancedSearch() {
+        const keyword = document.getElementById('advKeyword').value.trim().toLowerCase();
+        const type = document.getElementById('advType').value;
+        const herb = document.getElementById('advHerb').value.trim().toLowerCase();
+        const disease = document.getElementById('advDisease').value.trim().toLowerCase();
+        const inheritor = document.getElementById('advInheritor').value.trim().toLowerCase();
+
+        let results = await allEntities();
+
+        if (type) {
+            results = results.filter(item => item.type === type);
+        }
+
+        if (keyword) {
+            results = results.filter(item => entityText(item).includes(keyword));
+        }
+
+        if (herb) {
+            results = results.filter(item => entityText(item).includes(herb));
+        }
+
+        if (disease) {
+            results = results.filter(item => entityText(item).includes(disease));
+        }
+
+        if (inheritor) {
+            results = results.filter(item => entityText(item).includes(inheritor));
+        }
+
+        document.getElementById('searchPageInfo').innerText = `找到 ${results.length} 条相关内容。`;
+        document.getElementById('searchPageResults').innerHTML = makeResultHTML(results);
+    }
+
+    function resetSearch() {
+        ['advKeyword', 'advType', 'advHerb', 'advDisease', 'advInheritor', 'simpleSearchInput'].forEach(id => {
+            const el = document.getElementById(id);
+            if (el) el.value = '';
+        });
+
+        document.getElementById('searchPageInfo').innerText = '可以直接输入关键词，也可以用左边的高级检索。';
+        document.getElementById('searchPageResults').innerHTML = '';
+    }
+
+    function openSearch() {
+        document.getElementById('searchModal').classList.add('active');
+        document.body.style.overflow = 'hidden';
+        setTimeout(() => document.getElementById('modalSearchInput').focus(), 50);
+    }
+
+    function closeSearch() {
+        document.getElementById('searchModal').classList.remove('active');
+        document.body.style.overflow = 'auto';
+    }
+
+    async function modalSearch(keyword) {
+        const q = keyword.trim().toLowerCase();
+        const info = document.getElementById('modalSearchInfo');
+        const box = document.getElementById('modalSearchResults');
+
+        if (!q) {
+            info.innerText = '请输入关键词进行实时检索。';
+            box.innerHTML = '';
+            return;
+        }
+
+        const records = await allEntities();
+        const results = records.filter(item => entityText(item).includes(q));
+        info.innerText = `找到 ${results.length} 条相关内容。`;
+        box.innerHTML = makeResultHTML(results);
+    }
+
+    function openImageModal(title, caption) {
+        document.getElementById('imageModalTitle').innerText = title;
+        document.getElementById('imageModalBody').innerHTML = `图片预览占位<br>${caption}`;
+        document.getElementById('imageModal').classList.add('active');
+        document.body.style.overflow = 'hidden';
+    }
+
+    function closeImageModal() {
+        document.getElementById('imageModal').classList.remove('active');
+        document.body.style.overflow = 'auto';
+    }
+
+    async function initRender() {
+        await seedDatabase();
+        await Promise.all([
+            renderStats(),
+            renderInheritors(),
+            renderDiseases(),
+            renderPrescriptions(),
+            renderHerbs(),
+            renderGallery()
+        ]);
+    }
+
+    document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape') {
+            closeSearch();
+            closeImageModal();
+        }
+    });
+
+    window.onload = initRender;
+</script>
+
+</body>
+</html>
