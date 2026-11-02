@@ -882,7 +882,6 @@
 
 <script>
     let lastListPage = 'home';
-
     const db = {
         inheritors: [
             {
@@ -951,7 +950,6 @@
                 tags: ['基层草医', '村寨医疗', '民间经验']
             }
         ],
-
         diseases: [
             {
                 id: 'd1',
@@ -1024,7 +1022,6 @@
                 tags: ['皮肤', '红肿', '清热解毒']
             }
         ],
-
         prescriptions: [
             {
                 id: 'p1',
@@ -1123,7 +1120,6 @@
                 tags: ['儿童', '调理', '慎用']
             }
         ],
-
         herbs: [
             {
                 id: 'h1',
@@ -1309,29 +1305,24 @@
             }
         ]
     };
-
     const typeNameMap = {
         inheritor: '传承人',
         disease: '病症',
         prescription: '药方',
         herb: '草药'
     };
-
     const pageMap = {
         inheritor: 'inheritors',
         disease: 'diseases',
         prescription: 'prescriptions',
         herb: 'herbs'
     };
-
     const DB_NAME = 'lisu-herbal-culture';
     const DB_VERSION = 1;
     const ENTITY_STORE = 'entities';
     let databasePromise;
-
     function openDatabase() {
         if (databasePromise) return databasePromise;
-
         databasePromise = new Promise((resolve, reject) => {
             const request = indexedDB.open(DB_NAME, DB_VERSION);
             request.onupgradeneeded = () => {
@@ -1342,10 +1333,8 @@
             request.onsuccess = () => resolve(request.result);
             request.onerror = () => reject(request.error);
         });
-
         return databasePromise;
     }
-
     function transactionRequest(mode, operation) {
         return openDatabase().then(database => new Promise((resolve, reject) => {
             const transaction = database.transaction(ENTITY_STORE, mode);
@@ -1354,11 +1343,9 @@
             request.onerror = () => reject(request.error);
         }));
     }
-
     async function seedDatabase() {
         const existing = await transactionRequest('readonly', store => store.count());
         if (existing > 0) return;
-
         const entities = allSeedEntities();
         await openDatabase().then(database => new Promise((resolve, reject) => {
             const transaction = database.transaction(ENTITY_STORE, 'readwrite');
@@ -1368,7 +1355,6 @@
             transaction.onerror = () => reject(transaction.error);
         }));
     }
-
     function allSeedEntities() {
         return [
             ...db.inheritors,
@@ -1377,36 +1363,27 @@
             ...db.herbs
         ];
     }
-
     function allEntities() {
         return transactionRequest('readonly', store => store.getAll());
     }
-
     function getEntitiesByType(type) {
         return transactionRequest('readonly', store => store.index('type').getAll(type));
     }
-
     function getEntityById(id) {
         return transactionRequest('readonly', store => store.get(id));
     }
-
     function entityText(entity) {
         return JSON.stringify(entity).toLowerCase();
     }
-
     function switchPage(pageId) {
         document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
         document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
-
         const targetPage = document.getElementById(pageId);
         if (targetPage) targetPage.classList.add('active');
-
         const navItem = document.querySelector(`.nav-item[data-page="${pageId}"]`);
         if (navItem) navItem.classList.add('active');
-
         window.scrollTo({ top: 0, behavior: 'smooth' });
     }
-
     async function renderStats() {
         const [herbs, prescriptions, diseases, inheritors] = await Promise.all([
             getEntitiesByType('herb'),
@@ -1419,7 +1396,6 @@
         document.getElementById('statDiseases').innerText = diseases.length;
         document.getElementById('statInheritors').innerText = inheritors.length;
     }
-
     async function renderInheritors() {
         const box = document.getElementById('inheritorList');
         const records = await getEntitiesByType('inheritor');
@@ -1435,7 +1411,6 @@
             </div>
         `).join('');
     }
-
     async function renderDiseases() {
         const box = document.getElementById('diseaseList');
         const records = await getEntitiesByType('disease');
@@ -1450,7 +1425,6 @@
             </div>
         `).join('');
     }
-
     async function renderPrescriptions() {
         const box = document.getElementById('prescriptionList');
         const records = await getEntitiesByType('prescription');
@@ -1465,7 +1439,6 @@
             </div>
         `).join('');
     }
-
     async function renderHerbs() {
         const box = document.getElementById('herbList');
         const records = await getEntitiesByType('herb');
@@ -1480,7 +1453,6 @@
             </div>
         `).join('');
     }
-
     async function renderGallery() {
         const herbs = await getEntitiesByType('herb');
         const items = [
@@ -1494,11 +1466,10 @@
             { title: '草药晾晒场景', caption: '采回草药后进行清理、晾晒的场景。', owner: '田野图片', imgUrl: '' },
             { title: '山地采药路线', caption: '记录草药生长环境和采集路线。', owner: '田野调查', imgUrl: '' }
         ];
-
         document.getElementById('galleryList').innerHTML = items.map(item => `
             <div class="gallery-item" onclick="openImageModal('${item.title}', '${item.caption}', '${item.imgUrl}')">
                 ${ item.imgUrl
-                    ? `<div class="gallery-img-box"><img src="${item.imgUrl}" alt="${item.title}" loading="lazy"></div>`
+                    ? `<div class="gallery-img-box"><img src="${item.imgUrl}?x-oss-process=image/resize,w_1920" alt="${item.title}" loading="lazy"></div>`
                     : `<div class="gallery-placeholder">图片占位<br>${item.title}</div>`
                 }
                 <div class="gallery-caption">
@@ -1509,23 +1480,18 @@
             </div>
         `).join('');
     }
-
     async function relationChips(ids) {
         if (!ids || ids.length === 0) {
             return '<span style="color:var(--text-gray);">暂无关联记录</span>';
         }
-
         const entities = await Promise.all(ids.map(id => getEntityById(id)));
         return entities.filter(Boolean).map(entity => `<span class="link-chip" onclick="showDetail('${entity.type}','${entity.id}')">${typeNameMap[entity.type]}：${entity.name}</span>`).join('');
     }
-
     async function showDetail(type, id) {
         lastListPage = pageMap[type] || 'home';
         const item = await getEntityById(id);
         if (!item) return;
-
         let html = '';
-
         if (type === 'inheritor') {
             html = `
                 <div class="grid-2">
@@ -1546,7 +1512,6 @@
                 </div>
             `;
         }
-
         if (type === 'disease') {
             html = `
                 <h2 class="detail-title">${item.name}</h2>
@@ -1562,7 +1527,6 @@
                 ${await relationChips(item.prescriptions)}
             `;
         }
-
         if (type === 'prescription') {
             html = `
                 <h2 class="detail-title">${item.name}</h2>
@@ -1580,7 +1544,6 @@
                 ${await relationChips(item.inheritors)}
             `;
         }
-
         if (type === 'herb') {
             html = `
                 <div class="grid-2">
@@ -1601,27 +1564,23 @@
                     </div>
                     <div class="detail-img">
                         ${ item.imgUrl
-                            ? `<img src="${item.imgUrl}" alt="${item.name}">`
+                            ? `<img src="${item.imgUrl}?x-oss-process=image/resize,w_1920" alt="${item.name}">`
                             : `草药标本图片占位<br>${item.specimen}`
                         }
                     </div>
                 </div>
             `;
         }
-
         document.getElementById('detailContent').innerHTML = html;
         switchPage('detail');
     }
-
     function goBackToLastList() {
         switchPage(lastListPage);
     }
-
     function makeResultHTML(results) {
         if (results.length === 0) {
             return '<p style="padding:15px;color:var(--text-gray);">没有找到相关内容，可以换个词试试。</p>';
         }
-
         return results.map(item => `
             <div class="result-item" onclick="showDetail('${item.type}', '${item.id}')">
                 <span class="type-badge">${typeNameMap[item.type]}</span>
@@ -1630,109 +1589,88 @@
             </div>
         `).join('');
     }
-
     async function simpleSearch(keyword) {
         const q = keyword.trim().toLowerCase();
         const info = document.getElementById('searchPageInfo');
         const box = document.getElementById('searchPageResults');
-
         if (!q) {
             info.innerText = '可以直接输入关键词，也可以用左边的高级检索。';
             box.innerHTML = '';
             return;
         }
-
         const records = await allEntities();
         const results = records.filter(item => entityText(item).includes(q));
         info.innerText = `找到 ${results.length} 条相关内容。`;
         box.innerHTML = makeResultHTML(results);
     }
-
     async function advancedSearch() {
         const keyword = document.getElementById('advKeyword').value.trim().toLowerCase();
         const type = document.getElementById('advType').value;
         const herb = document.getElementById('advHerb').value.trim().toLowerCase();
         const disease = document.getElementById('advDisease').value.trim().toLowerCase();
         const inheritor = document.getElementById('advInheritor').value.trim().toLowerCase();
-
         let results = await allEntities();
-
         if (type) {
             results = results.filter(item => item.type === type);
         }
-
         if (keyword) {
             results = results.filter(item => entityText(item).includes(keyword));
         }
-
         if (herb) {
             results = results.filter(item => entityText(item).includes(herb));
         }
-
         if (disease) {
             results = results.filter(item => entityText(item).includes(disease));
         }
-
         if (inheritor) {
             results = results.filter(item => entityText(item).includes(inheritor));
         }
-
         document.getElementById('searchPageInfo').innerText = `找到 ${results.length} 条相关内容。`;
         document.getElementById('searchPageResults').innerHTML = makeResultHTML(results);
     }
-
     function resetSearch() {
         ['advKeyword', 'advType', 'advHerb', 'advDisease', 'advInheritor', 'simpleSearchInput'].forEach(id => {
             const el = document.getElementById(id);
             if (el) el.value = '';
         });
-
         document.getElementById('searchPageInfo').innerText = '可以直接输入关键词，也可以用左边的高级检索。';
         document.getElementById('searchPageResults').innerHTML = '';
     }
-
     function openSearch() {
         document.getElementById('searchModal').classList.add('active');
         document.body.style.overflow = 'hidden';
         setTimeout(() => document.getElementById('modalSearchInput').focus(), 50);
     }
-
     function closeSearch() {
         document.getElementById('searchModal').classList.remove('active');
         document.body.style.overflow = 'auto';
     }
-
     async function modalSearch(keyword) {
         const q = keyword.trim().toLowerCase();
         const info = document.getElementById('modalSearchInfo');
         const box = document.getElementById('modalSearchResults');
-
         if (!q) {
             info.innerText = '请输入关键词进行实时检索。';
             box.innerHTML = '';
             return;
         }
-
         const records = await allEntities();
         const results = records.filter(item => entityText(item).includes(q));
         info.innerText = `找到 ${results.length} 条相关内容。`;
         box.innerHTML = makeResultHTML(results);
     }
-
     function openImageModal(title, caption, imgUrl) {
         document.getElementById('imageModalTitle').innerText = title;
         document.getElementById('imageModalBody').innerHTML = imgUrl
-            ? `<img src="${imgUrl}" alt="${title}" style="width:100%;height:100%;object-fit:contain;">`
+            ? `<img src="${imgUrl}?x-oss-process=image/resize,w_1920" alt="${title}" style="width:100%;height:100%;object-fit:contain;">`
             : `图片预览占位<br>${caption}`;
         document.getElementById('imageModal').classList.add('active');
         document.body.style.overflow = 'hidden';
     }
-
     function closeImageModal() {
         document.getElementById('imageModal').classList.remove('active');
         document.body.style.overflow = 'auto';
     }
-
     async function initRender() {
         await seedDatabase();
         await Promise.all([
@@ -1744,16 +1682,15 @@
             renderGallery()
         ]);
     }
-
     document.addEventListener('keydown', function(e) {
         if (e.key === 'Escape') {
             closeSearch();
             closeImageModal();
         }
     });
-
     window.onload = initRender;
 </script>
+
 
 </body>
 </html>
