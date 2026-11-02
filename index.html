@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <html lang="zh-CN">
 <head>
     <meta charset="UTF-8">
@@ -419,6 +420,13 @@
             font-weight: bold;
         }
 
+        .detail-img img {
+            width: 100%;
+            height: 100%;
+            min-height: 230px;
+            object-fit: cover;
+        }
+
         .gallery-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
@@ -444,6 +452,18 @@
             font-weight: bold;
             text-align: center;
             padding: 15px;
+        }
+
+        .gallery-img-box {
+            height: 180px;
+            overflow: hidden;
+            background: linear-gradient(135deg, #e9f7ef, #cdebd7);
+        }
+
+        .gallery-img-box img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
         }
 
         .gallery-caption {
@@ -1111,6 +1131,7 @@
                 name: '化骨丹',
                 localName: '土名：待核验',
                 specimen: '化骨丹标本图',
+                imgUrl: 'https://wanghar.oss-cn-chengdu.aliyuncs.com/01_%E5%8C%96%E9%AA%A8%E4%B8%B9_%E5%85%AD%E6%9C%88%E5%AF%92.jpg',
                 properties: '民间传说色彩较强，实际使用需非常谨慎。',
                 prescriptions: [],
                 inheritors: [],
@@ -1123,6 +1144,7 @@
                 name: '草血竭',
                 localName: '土名：待核验',
                 specimen: '草血竭根茎图',
+                imgUrl: 'https://wanghar.oss-cn-chengdu.aliyuncs.com/07_%E8%8D%89%E8%A1%80%E7%AB%AD.jpg',
                 properties: '传统说法中常与止血、外伤有关。',
                 prescriptions: ['p1'],
                 inheritors: ['i1'],
@@ -1135,6 +1157,7 @@
                 name: '遍地金',
                 localName: '土名：待核验',
                 specimen: '遍地金全株图',
+                imgUrl: 'https://wanghar.oss-cn-chengdu.aliyuncs.com/08_%E9%81%8D%E5%9C%B0%E9%87%91.jpg',
                 properties: '传统说法中常与清热、利湿有关。',
                 prescriptions: ['p3', 'p7'],
                 inheritors: ['i2', 'i4'],
@@ -1147,6 +1170,7 @@
                 name: '大麻药',
                 localName: '土名：待核验',
                 specimen: '大麻药药材图',
+                imgUrl: 'https://wanghar.oss-cn-chengdu.aliyuncs.com/09_%E5%A4%A7%E9%BA%BB%E8%8D%AF.jpg',
                 properties: '传统说法中与止痛、骨伤有关，但也可能有风险。',
                 prescriptions: ['p1', 'p2'],
                 inheritors: ['i1'],
@@ -1159,6 +1183,7 @@
                 name: '八角枫',
                 localName: '土名：待核验',
                 specimen: '八角枫根部图',
+                imgUrl: 'https://wanghar.oss-cn-chengdu.aliyuncs.com/10_%E5%85%AB%E8%A7%92%E6%9E%AB.jpg',
                 properties: '传统说法中与祛风除湿、舒筋有关。',
                 prescriptions: ['p2', 'p4'],
                 inheritors: ['i1', 'i4'],
@@ -1171,6 +1196,7 @@
                 name: '刺老包',
                 localName: '土名：待核验',
                 specimen: '刺老包嫩芽图',
+                imgUrl: 'https://wanghar.oss-cn-chengdu.aliyuncs.com/11_%E5%88%BA%E8%80%81%E5%8C%85.jpg',
                 properties: '民间有药食同源说法，嫩芽也可见于地方饮食。',
                 prescriptions: ['p2', 'p4'],
                 inheritors: ['i4'],
@@ -1183,6 +1209,7 @@
                 name: '一支箭',
                 localName: '土名：待核验',
                 specimen: '一支箭全株图',
+                imgUrl: 'https://wanghar.oss-cn-chengdu.aliyuncs.com/12_%E4%B8%80%E6%94%AF%E7%AE%AD.jpg',
                 properties: '传统说法中与儿童调理有关。',
                 prescriptions: ['p8'],
                 inheritors: ['i5'],
@@ -1195,6 +1222,7 @@
                 name: '青刺头',
                 localName: '土名：待核验',
                 specimen: '青刺头图',
+                imgUrl: '',
                 properties: '传统说法中与安神、惊风有关。',
                 prescriptions: ['p8'],
                 inheritors: ['i5'],
@@ -1207,6 +1235,7 @@
                 name: '野薄荷',
                 localName: '土名：待核验',
                 specimen: '野薄荷叶片图',
+                imgUrl: '',
                 properties: '民间常说可用于清凉、缓解鼻塞。',
                 prescriptions: ['p5'],
                 inheritors: ['i3'],
@@ -1219,6 +1248,7 @@
                 name: '鱼腥草',
                 localName: '土名：待核验',
                 specimen: '鱼腥草全株图',
+                imgUrl: 'https://wanghar.oss-cn-chengdu.aliyuncs.com/02_%E9%B1%BC%E8%85%A5%E8%8D%89.jpg',
                 properties: '传统说法中与清热、咳嗽、湿热有关。',
                 prescriptions: ['p3', 'p5'],
                 inheritors: ['i2', 'i3'],
@@ -1231,6 +1261,7 @@
                 name: '伸筋草',
                 localName: '土名：待核验',
                 specimen: '伸筋草图',
+                imgUrl: 'https://wanghar.oss-cn-chengdu.aliyuncs.com/03_%E4%BC%B8%E7%AD%8B%E8%8D%89.jpg',
                 properties: '传统说法中与舒筋活络有关。',
                 prescriptions: ['p4'],
                 inheritors: ['i4'],
@@ -1243,6 +1274,7 @@
                 name: '山楂',
                 localName: '土名：待核验',
                 specimen: '山楂果实图',
+                imgUrl: 'https://wanghar.oss-cn-chengdu.aliyuncs.com/04_%E5%B1%B1%E6%A5%82.jpg',
                 properties: '民间常说可帮助消化。',
                 prescriptions: ['p6'],
                 inheritors: ['i3'],
@@ -1255,6 +1287,7 @@
                 name: '鸡内金',
                 localName: '土名：待核验',
                 specimen: '鸡内金药材图',
+                imgUrl: 'https://wanghar.oss-cn-chengdu.aliyuncs.com/05_%E9%B8%A1%E5%86%85%E9%87%91.jpg',
                 properties: '传统说法中与消食、健胃有关。',
                 prescriptions: ['p6'],
                 inheritors: ['i3'],
@@ -1267,6 +1300,7 @@
                 name: '蒲公英',
                 localName: '土名：待核验',
                 specimen: '蒲公英全株图',
+                imgUrl: 'https://wanghar.oss-cn-chengdu.aliyuncs.com/06_%E8%92%B2%E5%85%AC%E8%8B%B1.jpg',
                 properties: '传统说法中与清热解毒、皮肤红肿有关。',
                 prescriptions: ['p7'],
                 inheritors: ['i4'],
@@ -1453,16 +1487,20 @@
             ...herbs.map(h => ({
                 title: h.name + ' 标本图片',
                 caption: h.specimen,
-                owner: h.name
+                owner: h.name,
+                imgUrl: h.imgUrl || ''
             })),
-            { title: '田野访谈场景', caption: '访问传承人和村寨老人时形成的图片资料。', owner: '访谈档案' },
-            { title: '草药晾晒场景', caption: '采回草药后进行清理、晾晒的场景。', owner: '田野图片' },
-            { title: '山地采药路线', caption: '记录草药生长环境和采集路线。', owner: '田野调查' }
+            { title: '田野访谈场景', caption: '访问传承人和村寨老人时形成的图片资料。', owner: '访谈档案', imgUrl: '' },
+            { title: '草药晾晒场景', caption: '采回草药后进行清理、晾晒的场景。', owner: '田野图片', imgUrl: '' },
+            { title: '山地采药路线', caption: '记录草药生长环境和采集路线。', owner: '田野调查', imgUrl: '' }
         ];
 
         document.getElementById('galleryList').innerHTML = items.map(item => `
-            <div class="gallery-item" onclick="openImageModal('${item.title}', '${item.caption}')">
-                <div class="gallery-placeholder">图片占位<br>${item.title}</div>
+            <div class="gallery-item" onclick="openImageModal('${item.title}', '${item.caption}', '${item.imgUrl}')">
+                ${ item.imgUrl
+                    ? `<div class="gallery-img-box"><img src="${item.imgUrl}" alt="${item.title}" loading="lazy"></div>`
+                    : `<div class="gallery-placeholder">图片占位<br>${item.title}</div>`
+                }
                 <div class="gallery-caption">
                     <strong>${item.title}</strong><br>
                     ${item.caption}<br>
@@ -1561,7 +1599,12 @@
                         <h3 class="sub-header">相关传承人</h3>
                         ${await relationChips(item.inheritors)}
                     </div>
-                    <div class="detail-img">草药标本图片占位<br>${item.specimen}</div>
+                    <div class="detail-img">
+                        ${ item.imgUrl
+                            ? `<img src="${item.imgUrl}" alt="${item.name}">`
+                            : `草药标本图片占位<br>${item.specimen}`
+                        }
+                    </div>
                 </div>
             `;
         }
@@ -1676,9 +1719,11 @@
         box.innerHTML = makeResultHTML(results);
     }
 
-    function openImageModal(title, caption) {
+    function openImageModal(title, caption, imgUrl) {
         document.getElementById('imageModalTitle').innerText = title;
-        document.getElementById('imageModalBody').innerHTML = `图片预览占位<br>${caption}`;
+        document.getElementById('imageModalBody').innerHTML = imgUrl
+            ? `<img src="${imgUrl}" alt="${title}" style="width:100%;height:100%;object-fit:contain;">`
+            : `图片预览占位<br>${caption}`;
         document.getElementById('imageModal').classList.add('active');
         document.body.style.overflow = 'hidden';
     }
